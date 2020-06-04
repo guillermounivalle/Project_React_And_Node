@@ -4,18 +4,18 @@ import React from "react"
 //En la segunda función se recibe el componente players.
 import {connect} from "react-redux"
 
-const Players  = ({players}) => (
+const Players  = ({players, addTitularPlayer, addSubstitutePlayer }) => (
     <section>
         <h2>jugadores</h2>
         <div className="players-contents">
             {
                 players.map(player =>(
-                    <articule>
+                    <articule className="player" key={player.id}>
                         <img src={player.photo} alt={player.name}/>
                         <h3>{player.name}</h3>
                         <div>
-                            <button>Titular_Player</button>
-                            <button>Substitute_Player</button>
+                            <button onClick={() => addTitularPlayer(player)}>Titular_Player</button>
+                            <button onClick={() => addSubstitutePlayer(player)}>Substitute_Player</button>
                         </div>
                     </articule>
                 ))
@@ -29,9 +29,22 @@ const mapStateToProps = state => ({
     players: state.players
 })
 
+//Aquí viene las funciones que se convierten en propiedades
 const mapDispatchToProps = dispatch => ({
+    addTitularPlayer(player){
+        dispatch({
+            type: "add_titular_player",
+            player
+        })
+    },
+    addSubstitutePlayer(player){
+        dispatch({
+            type: "add_substitute_Player",
+            player
+        })
+    }
 
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Players);
 /**
