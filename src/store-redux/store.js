@@ -28,6 +28,37 @@ const initialState = {
 }
 
 const reducerCoach =(state = initialState, action) => {
+    
+    switch (action.type) {
+        case "add_titular_player":
+            return{
+                ...state,
+                titular_players: state.titular_players.concat(action.player),
+                players: state.players.filter(player => player.id !== action.player.id)
+            }
+        case "add_substitute_Player":
+            return{
+                ...state,
+                substitute_players: state.substitute_players.concat(action.player),
+                players: state.players.filter(player => player.id !== action.player.id)
+            }
+        case "erase_titular_player":
+            return{
+                ...state,
+                titular_players: state.titular_players.filter(player => player.id !== action.player.id),
+                players: state.players.concat(action.player),
+            }        
+
+        case "erase_substitute_player":
+            return{
+                ...state,
+                substitute_players: state.substitute_players.filter(player => player.id !== action.player.id),
+                players: state.players.concat(action.player),
+            }            
+        default:
+            break;
+    }
+
     return state;
 }
 
